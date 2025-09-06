@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% block content %}
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<div class="d-flex justify-content-center align-items-center min-vh-100">
+  <div class="col-md-8 col-lg-6">
+    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+      <div class="row g-0">
+
+        <!-- Left Panel -->
+        <div class="col-md-4 d-none d-md-flex flex-column justify-content-center align-items-center bg-gradient text-center p-4">
+          <h3 class="text-white fw-bold">Join Us</h3>
+        </div>
+
+        <!-- Right Panel -->
+        <div class="col-md-8 bg-white p-4">
+          <h3 class="text-center mb-4 fw-semibold text-primary">Create User</h3>
+          <form method="POST" novalidate>
+            {{ form.hidden_tag() }}
+
+            <!-- Name -->
+            <div class="mb-3">
+              {{ form.name(class="form-control rounded-pill", placeholder="Full Name *") }}
+              {% for e in form.name.errors %}<small class="text-danger">{{ e }}</small>{% endfor %}
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+              {{ form.email(class="form-control rounded-pill", placeholder="Email *") }}
+              {% for e in form.email.errors %}<small class="text-danger">{{ e }}</small>{% endfor %}
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+              {{ form.password(class="form-control rounded-pill", placeholder="Password *") }}
+              {% for e in form.password.errors %}<small class="text-danger">{{ e }}</small>{% endfor %}
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="mb-3">
+              {{ form.confirm(class="form-control rounded-pill", placeholder="Confirm Password *") }}
+              {% for e in form.confirm.errors %}<small class="text-danger">{{ e }}</small>{% endfor %}
+            </div>
+
+            <!-- Role -->
+            <div class="mb-3">
+              {% if not current_user.is_authenticated %}
+                {{ form.role(class="form-select rounded-pill", readonly=true) }}
+              {% else %}
+                {{ form.role(class="form-select rounded-pill") }}
+              {% endif %}
+              {% for e in form.role.errors %}<small class="text-danger">{{ e }}</small>{% endfor %}
+            </div>
+
+            <!-- Buttons -->
+            <div class="d-flex justify-content-between">
+              {{ form.submit(class="btn btn-primary rounded-pill px-4 fw-semibold") }}
+              <a href="{{ url_for('index') }}" class="btn btn-outline-secondary rounded-pill px-4">Back</a>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Full-page background */
+body {
+  background: linear-gradient(135deg, #1e3c72, #5a2a98ff);
+  margin: 0;
+}
+
+/* Card */
+.card {
+  border-radius: 1rem;
+}
+
+/* Left Panel */
+.bg-gradient {
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  color: #fff;
+}
+
+/* Input Fields */
+.form-control, .form-select {
+  padding: 10px 15px;
+  font-size: 0.95rem;
+  border: 1px solid #dee2e6;
+  transition: all 0.3s ease;
+}
+.form-control:focus, .form-select:focus {
+  border-color: #2a5298;
+  box-shadow: 0 0 6px rgba(42, 82, 152, 0.3);
+}
+
+/* Buttons */
+.btn-primary {
+  background: #2a5298;
+  border: none;
+}
+.btn-primary:hover {
+  background: #1e3c72;
+}
+.btn-outline-secondary {
+  border: 2px solid #2a5298;
+  color: #2a5298;
+}
+.btn-outline-secondary:hover {
+  background: #2a5298;
+  color: #fff;
+}
+</style>
+{% endblock %}
